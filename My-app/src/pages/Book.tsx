@@ -3,37 +3,48 @@ import { NavBar } from '../components/NavBar'
 import { Footer } from '../components/Footer'
 import { useParams } from 'react-router-dom';
 
-export const Book = () => {
+type Book = {
+  id: string;
+  title: string;
+  image: string;
+  author: string;
+  summary: string;
+  price:string;
+
+};
+export const Book = ({ books }: { books: Book[] }) => {
     const { id } = useParams();
 
-
+    const book = books.find((book) => book.id === id);
+    if (!book) {
+      return <div>Book not found</div>;
+    }
+  
   return (
     <div>
     <div className="flex flex-col h-screen">
       <div className="flex-grow">
        <NavBar></NavBar>
-       <p>Book ID: {id}</p>
        <div className="container mx-auto px-4 py-8">
             <div className="mb-8 text-right">
-             <h1 className="text-4xl font-bold"></h1>
-             <p className="text-gray-600">اسم الكاتب</p>
+             <h1 className="text-4xl font-bold">{book.title}</h1>
+             <p className="text-gray-600">{book.author}</p>
         </div>
 
 
 
       <div className="flex justify-end">
-    <img src="https://cdn.abjjad.com/pub/512c1a23-7ffd-4028-ab40-0a1971aefb8a.png" alt="Image" className="w-64 h-64"/>
+    <img src={book.image} alt="Image" className="w-64 h-64"/>
     </div>
 
       <div className="mt-8 text-right">
-        <h2 className="text-2xl font-bold mb-2">الوصف</h2>
-        <p>نص الوصف هنا...</p>
+        <h2 className="text-2xl font-bold mb-2">{book.summary}</h2>
       </div>
 
       <div className="mt-8 text-right">
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          أضف إلى السلة
-        </button>
+      <h2 className="text-2xl font-bold mb-2">السعر</h2>
+      <p>{book.price}</p>
+
     </div>
       </div>
       </div>
